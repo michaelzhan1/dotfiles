@@ -7,15 +7,19 @@ zstyle ':vcs_info:*' formats '%b'
 zstyle ':vcs_info:*' actionformats '%b'
 
 function precmd() {
+	local venv_prefix=""
+	if [[ -n "${VIRTUAL_ENV:-}" ]]; then
+		venv_prefix="($(basename $VIRTUAL_ENV)) "
+	fi
 	if git rev-parse --is-inside-work-tree &>/dev/null; then
 		vcs_info
 		local dirty=""
 		if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
 			dirty="*"
 		fi
-		PROMPT='%F{032}%~ %F{green}('${vcs_info_msg_0_}${dirty}') %f$ '
+		PROMPT="${venv_prefix}%F{032}%~ %F{green}('${vcs_info_msg_0_}${dirty}') %f$ "
 	else
-		PROMPT='%F{032}%~ %f$ '
+		PROMPT="${venv_prefix}%F{032}%~ %f$ "
 	fi
 }
 RPROMPT='%F{yellow}%n@%m%f %F{cyan}%D{%H:%M}%f'
