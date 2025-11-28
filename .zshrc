@@ -17,7 +17,7 @@ function precmd() {
 		if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
 			dirty="*"
 		fi
-		PROMPT="${venv_prefix}%F{032}%~ %F{green}('${vcs_info_msg_0_}${dirty}') %f$ "
+		PROMPT="${venv_prefix}%F{032}%~ %F{green}(${vcs_info_msg_0_}${dirty}) %f$ "
 	else
 		PROMPT="${venv_prefix}%F{032}%~ %f$ "
 	fi
